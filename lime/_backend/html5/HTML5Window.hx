@@ -383,7 +383,13 @@ class HTML5Window {
 		
 		if (textInput.value != dummyCharacter) {
 			
-			parent.onTextInput.dispatch (StringTools.replace (textInput.value, dummyCharacter, ""));
+			var value = StringTools.replace (textInput.value, dummyCharacter, "");
+			
+			if (value.length > 0) {
+				
+				parent.onTextInput.dispatch (value);
+				
+			}
 			
 			textInput.value = dummyCharacter;
 			
@@ -434,6 +440,13 @@ class HTML5Window {
 				
 				case "mousedown":
 					
+					if (event.currentTarget == element) {
+						
+						// Release outside browser window
+						Browser.window.addEventListener ("mouseup", handleMouseEvent);
+						
+					}
+					
 					parent.onMouseDown.dispatch (x, y, event.button);
 					
 					if (parent.onMouseDown.canceled) {
@@ -471,6 +484,14 @@ class HTML5Window {
 					}
 				
 				case "mouseup":
+					
+					Browser.window.removeEventListener ("mouseup", handleMouseEvent);
+					
+					if (event.currentTarget == element) {
+						
+						event.stopPropagation ();
+						
+					}
 					
 					parent.onMouseUp.dispatch (x, y, event.button);
 					
