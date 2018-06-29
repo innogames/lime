@@ -814,7 +814,11 @@ class HTML5Window {
 				untyped (textInput.style).pointerEvents = 'none';
 				textInput.style.zIndex = "-10000000";
 				
-				Browser.document.body.appendChild (textInput);
+				if (textInput.parentNode == null) {
+				
+					element.appendChild (textInput);
+				
+				}
 				
 			}
 			
