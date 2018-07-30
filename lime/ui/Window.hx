@@ -32,6 +32,7 @@ class Window {
 	public var display (get, null):Display;
 	public var displayMode (get, set):DisplayMode;
 	public var enableTextEvents (get, set):Bool;
+	public var enableContextMenuEvents:Bool;
 	public var fullscreen (get, set):Bool;
 	public var height (get, set):Int;
 	public var id (default, null):Int;
@@ -483,8 +484,8 @@ class Window {
 		return backend.setEnableTextEvents (value);
 		
 	}
-	
-	
+
+
 	@:noCompletion private inline function get_fullscreen ():Bool {
 		
 		return __fullscreen;
