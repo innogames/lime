@@ -286,7 +286,7 @@ class HTML5Window {
 	
 	private function handleContextMenuEvent (event:MouseEvent):Void {
 		
-		if (parent.onMouseUp.canceled) {
+		if (!parent.enableContextMenuEvents) {
 			
 			event.preventDefault ();
 			

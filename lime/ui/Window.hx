@@ -32,6 +32,7 @@ class Window {
 	public var display (get, null):Display;
 	public var displayMode (get, set):DisplayMode;
 	public var enableTextEvents (get, set):Bool;
+	public var enableContextMenuEvents (get, set):Bool;
 	public var fullscreen (get, set):Bool;
 	public var height (get, set):Int;
 	public var id (default, null):Int;
@@ -70,6 +71,7 @@ class Window {
 	public var y (get, set):Int;
 	
 	@:noCompletion private var backend:WindowBackend;
+	@:noCompletion private var __enableContextMenuEvents:Bool;
 	@:noCompletion private var __borderless:Bool;
 	@:noCompletion private var __fullscreen:Bool;
 	@:noCompletion private var __height:Int;
@@ -92,6 +94,7 @@ class Window {
 			"display": { get: p.get_display },
 			"displayMode": { get: p.get_displayMode, set: p.set_displayMode },
 			"enableTextEvents": { get: p.get_enableTextEvents, set: p.set_enableTextEvents },
+			"enableContextMenuEvents": { get: p.get_enableContextMenuEvents, set: p.set_enableContextMenuEvents },
 			"fullscreen": { get: p.get_fullscreen, set: p.set_fullscreen },
 			"height": { get: p.get_height, set: p.set_height },
 			"maximized": { get: p.get_maximized, set: p.set_maximized },
@@ -482,6 +485,20 @@ class Window {
 		
 		return backend.setEnableTextEvents (value);
 		
+	}
+
+
+	@:noCompletion private inline function get_enableContextMenuEvents ():Bool {
+
+		return __enableContextMenuEvents;
+
+	}
+
+
+	@:noCompletion private inline function set_enableContextMenuEvents (value:Bool):Bool {
+
+		return __enableContextMenuEvents = value;
+
 	}
 	
 	
