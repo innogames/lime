@@ -84,13 +84,7 @@ class HTML5Window {
 		renderType = "dom";
 		#end
 		
-		if (parent.config != null && Reflect.hasField (parent.config, "allowHighDPI") && parent.config.allowHighDPI && renderType != "dom") {
-			
-			scale = Browser.window.devicePixelRatio;
-			
-		}
-		
-		parent.__scale = scale;
+		updateScale ();
 		
 		cacheMouseX = 0;
 		cacheMouseY = 0;
@@ -979,9 +973,24 @@ class HTML5Window {
 	}
 	
 	
+	private function updateScale ():Void {
+		
+		if (parent.config != null && Reflect.hasField (parent.config, "allowHighDPI") && parent.config.allowHighDPI && renderType != "dom") {
+			
+			scale = Browser.window.devicePixelRatio;
+			
+		}
+		
+		parent.__scale = scale;
+		
+	}
+	
+	
 	private function updateSize ():Void {
 		
 		if (!parent.__resizable) return;
+		
+		updateScale ();
 		
 		var elementWidth, elementHeight;
 		
