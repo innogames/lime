@@ -555,6 +555,7 @@ class HTML5Window {
 	private function handleResizeEvent (event:js.html.Event):Void {
 		
 		primaryTouch = null;
+		updateScale();
 		updateSize ();
 		
 	}
@@ -989,8 +990,6 @@ class HTML5Window {
 	private function updateSize ():Void {
 		
 		if (!parent.__resizable) return;
-		
-		updateScale ();
 		
 		var elementWidth, elementHeight;
 		
