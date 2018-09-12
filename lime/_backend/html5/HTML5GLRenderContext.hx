@@ -998,9 +998,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function compressedTexImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, imageSize:Int, data:DataPointer):Void {
+	public inline function compressedTexImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, imageSize:Int, data:ArrayBufferView):Void {
 		
-		__context.compressedTexImage2D (target, level, internalformat, width, height, border, data.toBufferView (imageSize));
+		__context.compressedTexImage2D (target, level, internalformat, width, height, border, data);
 		
 	}
 	
@@ -2511,9 +2511,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function texImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, data:DataPointer):Void {
+	public inline function texImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, data:ArrayBufferView):Void {
 		
-		__context.texImage2D (target, level, internalformat, width, height, border, format, type, data.toBufferView ());
+		__context.texImage2D (target, level, internalformat, width, height, border, format, type, data);
 		
 	}
 	
@@ -4090,7 +4090,7 @@ extern class WebGL2RenderingContext extends WebGLRenderingContext {
 	public function samplerParameterf (sampler:GLSampler, pname:Int, param:Float):Void;
 	public function samplerParameteri (sampler:GLSampler, pname:Int, param:Int):Void;
 	
-	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, offset:DataPointer):Void {})
+	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, offset:Int):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, srcData:js.html.ArrayBufferView, srcOffset:Int):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, source:Dynamic /*js.html.ImageBitmap*/):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, source:js.html.ImageData):Void {})
