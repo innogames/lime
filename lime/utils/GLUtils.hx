@@ -17,11 +17,11 @@ class GLUtils {
 	
 	public static function compileShader (source:String, type:Int):GLShader {
 		
-		var shader = GL.createShader (type);
-		GL.shaderSource (shader, source);
-		GL.compileShader (shader);
+		var shader = GL.context.createShader (type);
+		GL.context.shaderSource (shader, source);
+		GL.context.compileShader (shader);
 		
-		if (GL.getShaderParameter (shader, GL.COMPILE_STATUS) == 0) {
+		if (GL.context.getShaderParameter (shader, GL.COMPILE_STATUS) == 0) {
 			
 			var message = switch (type) {
 				
@@ -31,7 +31,7 @@ class GLUtils {
 				
 			}
 			
-			message += "\n" + GL.getShaderInfoLog (shader);
+			message += "\n" + GL.context.getShaderInfoLog (shader);
 			Log.error (message);
 			
 		}
@@ -46,15 +46,15 @@ class GLUtils {
 		var vertexShader = compileShader (vertexSource, GL.VERTEX_SHADER);
 		var fragmentShader = compileShader (fragmentSource, GL.FRAGMENT_SHADER);
 		
-		var program = GL.createProgram ();
-		GL.attachShader (program, vertexShader);
-		GL.attachShader (program, fragmentShader);
-		GL.linkProgram (program);
+		var program = GL.context.createProgram ();
+		GL.context.attachShader (program, vertexShader);
+		GL.context.attachShader (program, fragmentShader);
+		GL.context.linkProgram (program);
 		
-		if (GL.getProgramParameter (program, GL.LINK_STATUS) == 0) {
+		if (GL.context.getProgramParameter (program, GL.LINK_STATUS) == 0) {
 			
 			var message = "Unable to initialize the shader program";
-			message += "\n" + GL.getProgramInfoLog (program);
+			message += "\n" + GL.context.getProgramInfoLog (program);
 			Log.error (message);
 			
 		}

@@ -11,6 +11,7 @@ import lime.utils.Int32Array;
 import lime.utils.UInt32Array;
 
 
+@:dce
 abstract WebGL2Context(GLRenderContext) from GLRenderContext to GLRenderContext {
 	
 	
@@ -3157,11 +3158,13 @@ abstract WebGL2Context(GLRenderContext) from GLRenderContext to GLRenderContext 
 	}
 	
 	
+	#if (!(js && html5))
 	@:from private static function fromGLES3Context (gl:GLES3Context):WebGL2Context {
 		
 		return (gl:GLRenderContext);
 		
 	}
+	#end
 	
 	
 	@:from private static function toWebGLContext (gl:WebGLContext):WebGL2Context {

@@ -12,6 +12,7 @@ import lime._backend.native.NativeCFFI;
 #end
 
 
+@:dce
 abstract DataPointer(DataPointerType) to DataPointerType {
 	
 	
