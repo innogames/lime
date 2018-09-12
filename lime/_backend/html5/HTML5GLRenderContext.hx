@@ -19,6 +19,7 @@ import lime.utils.UInt32Array;
 @:allow(lime.ui.Window)
 
 
+@:dce
 class HTML5GLRenderContext {
 	
 	
@@ -826,9 +827,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function bufferData (target:Int, size:Int, data:DataPointer, usage:Int):Void {
+	public inline function bufferData (target:Int, size:Int, data:ArrayBufferView, usage:Int):Void {
 		
-		__context.bufferData (target, data.toBufferView (size), usage);
+		__context.bufferData (target, data, usage);
 		
 	}
 	
@@ -997,9 +998,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function compressedTexImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, imageSize:Int, data:DataPointer):Void {
+	public inline function compressedTexImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, imageSize:Int, data:ArrayBufferView):Void {
 		
-		__context.compressedTexImage2D (target, level, internalformat, width, height, border, data.toBufferView (imageSize));
+		__context.compressedTexImage2D (target, level, internalformat, width, height, border, data);
 		
 	}
 	
@@ -1327,9 +1328,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function drawElements (mode:Int, count:Int, type:Int, offset:DataPointer):Void {
+	public inline function drawElements (mode:Int, count:Int, type:Int, offset:Int):Void {
 		
-		__context.drawElements (mode, count, type, offset.toValue ());
+		__context.drawElements (mode, count, type, offset);
 		
 	}
 	
@@ -2510,9 +2511,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function texImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, data:DataPointer):Void {
+	public inline function texImage2D (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, data:ArrayBufferView):Void {
 		
-		__context.texImage2D (target, level, internalformat, width, height, border, format, type, data.toBufferView ());
+		__context.texImage2D (target, level, internalformat, width, height, border, format, type, data);
 		
 	}
 	
@@ -2672,9 +2673,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform1fv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform1fv (location:GLUniformLocation, count:Int, v:Float32Array):Void {
 		
-		__context.uniform1fv (location, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT));
+		__context.uniform1fv (location, v);
 		
 	}
 	
@@ -2704,9 +2705,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform1iv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform1iv (location:GLUniformLocation, count:Int, v:Int32Array):Void {
 		
-		__context.uniform1iv (location, v.toInt32Array (count * Int32Array.BYTES_PER_ELEMENT));
+		__context.uniform1iv (location, v);
 		
 	}
 	
@@ -2736,9 +2737,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform1uiv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform1uiv (location:GLUniformLocation, count:Int, v:UInt32Array):Void {
 		
-		__context.uniform1uiv (location, v.toUInt32Array (count * UInt32Array.BYTES_PER_ELEMENT));
+		__context.uniform1uiv (location, v);
 		
 	}
 	
@@ -2757,9 +2758,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform2fv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform2fv (location:GLUniformLocation, count:Int, v:Float32Array):Void {
 		
-		__context.uniform2fv (location, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 2));
+		__context.uniform2fv (location, v);
 		
 	}
 	
@@ -2789,9 +2790,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform2iv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform2iv (location:GLUniformLocation, count:Int, v:Int32Array):Void {
 		
-		__context.uniform2iv (location, v.toInt32Array (count * Int32Array.BYTES_PER_ELEMENT * 2));
+		__context.uniform2iv (location, v);
 		
 	}
 	
@@ -2821,9 +2822,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform2uiv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform2uiv (location:GLUniformLocation, count:Int, v:UInt32Array):Void {
 		
-		__context.uniform2uiv (location, v.toUInt32Array (count * UInt32Array.BYTES_PER_ELEMENT * 2));
+		__context.uniform2uiv (location, v);
 		
 	}
 	
@@ -2842,9 +2843,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform3fv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform3fv (location:GLUniformLocation, count:Int, v:Float32Array):Void {
 		
-		__context.uniform3fv (location, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 3));
+		__context.uniform3fv (location, v);
 		
 	}
 	
@@ -2874,9 +2875,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform3iv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform3iv (location:GLUniformLocation, count:Int, v:Int32Array):Void {
 		
-		__context.uniform3iv (location, v.toInt32Array (count * Int32Array.BYTES_PER_ELEMENT * 3));
+		__context.uniform3iv (location, v);
 		
 	}
 	
@@ -2906,9 +2907,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform3uiv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform3uiv (location:GLUniformLocation, count:Int, v:UInt32Array):Void {
 		
-		__context.uniform3uiv (location, v.toUInt32Array (count * UInt32Array.BYTES_PER_ELEMENT * 3));
+		__context.uniform3uiv (location, v);
 		
 	}
 	
@@ -2927,9 +2928,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform4fv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform4fv (location:GLUniformLocation, count:Int, v:Float32Array):Void {
 		
-		__context.uniform4fv (location, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 4));
+		__context.uniform4fv (location, v);
 		
 	}
 	
@@ -2959,9 +2960,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform4iv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform4iv (location:GLUniformLocation, count:Int, v:Int32Array):Void {
 		
-		__context.uniform4iv (location, v.toInt32Array (count * Int32Array.BYTES_PER_ELEMENT * 4));
+		__context.uniform4iv (location, v);
 		
 	}
 	
@@ -2991,9 +2992,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniform4uiv (location:GLUniformLocation, count:Int, v:DataPointer):Void {
+	public inline function uniform4uiv (location:GLUniformLocation, count:Int, v:UInt32Array):Void {
 		
-		__context.uniform4uiv (location, v.toUInt32Array (count * UInt32Array.BYTES_PER_ELEMENT * 4));
+		__context.uniform4uiv (location, v);
 		
 	}
 	
@@ -3012,9 +3013,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniformMatrix2fv (location:GLUniformLocation, count:Int, transpose:Bool, v:DataPointer):Void {
+	public inline function uniformMatrix2fv (location:GLUniformLocation, count:Int, transpose:Bool, v:Float32Array):Void {
 		
-		__context.uniformMatrix2fv (location, transpose, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 4));
+		__context.uniformMatrix2fv (location, transpose, v);
 		
 	}
 	
@@ -3065,9 +3066,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniformMatrix3fv (location:GLUniformLocation, count:Int, transpose:Bool, v:DataPointer):Void {
+	public inline function uniformMatrix3fv (location:GLUniformLocation, count:Int, transpose:Bool, v:Float32Array):Void {
 		
-		__context.uniformMatrix3fv (location, transpose, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 9));
+		__context.uniformMatrix3fv (location, transpose, v);
 		
 	}
 	
@@ -3118,9 +3119,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function uniformMatrix4fv (location:GLUniformLocation, count:Int, transpose:Bool, v:DataPointer):Void {
+	public inline function uniformMatrix4fv (location:GLUniformLocation, count:Int, transpose:Bool, v:Float32Array):Void {
 		
-		__context.uniformMatrix4fv (location, transpose, v.toFloat32Array (count * Float32Array.BYTES_PER_ELEMENT * 16));
+		__context.uniformMatrix4fv (location, transpose, v);
 		
 	}
 	
@@ -3352,9 +3353,9 @@ class HTML5GLRenderContext {
 	}
 	
 	
-	public inline function vertexAttribPointer (index:Int, size:Int, type:Int, normalized:Bool, stride:Int, offset:DataPointer):Void {
+	public inline function vertexAttribPointer (index:Int, size:Int, type:Int, normalized:Bool, stride:Int, offset:Int):Void {
 		
-		__context.vertexAttribPointer (index, size, type, normalized, stride, offset.toValue ());
+		__context.vertexAttribPointer (index, size, type, normalized, stride, offset);
 		
 	}
 	
@@ -4089,7 +4090,7 @@ extern class WebGL2RenderingContext extends WebGLRenderingContext {
 	public function samplerParameterf (sampler:GLSampler, pname:Int, param:Float):Void;
 	public function samplerParameteri (sampler:GLSampler, pname:Int, param:Int):Void;
 	
-	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, offset:DataPointer):Void {})
+	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, offset:Int):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, srcData:js.html.ArrayBufferView, srcOffset:Int):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, source:Dynamic /*js.html.ImageBitmap*/):Void {})
 	@:overload(function (target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, source:js.html.ImageData):Void {})
