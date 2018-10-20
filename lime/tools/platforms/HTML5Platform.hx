@@ -3,6 +3,7 @@ package lime.tools.platforms;
 
 import haxe.io.Path;
 import haxe.Template;
+import lime.text.Font;
 import lime.tools.helpers.DeploymentHelper;
 import lime.tools.helpers.FileHelper;
 import lime.tools.helpers.HTML5Helper;
@@ -338,6 +339,16 @@ class HTML5Platform extends PlatformTarget {
 					for (embeddedAsset in embeddedAssets) {
 						
 						if (embeddedAsset.type == "font" && embeddedAsset.sourcePath == asset.sourcePath) {
+							
+							var font = Font.fromFile (asset.sourcePath);
+							
+							embeddedAsset.ascender = font.ascender;
+							embeddedAsset.descender = font.descender;
+							embeddedAsset.height = font.height;
+							embeddedAsset.numGlyphs = font.numGlyphs;
+							embeddedAsset.underlinePosition = font.underlinePosition;
+							embeddedAsset.underlineThickness = font.underlineThickness;
+							embeddedAsset.unitsPerEM = font.unitsPerEM;
 							
 							if (shouldEmbedFont) {
 								
