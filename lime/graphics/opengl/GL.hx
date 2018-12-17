@@ -661,6 +661,7 @@ class GL {
 	private static var __currentProgram:GLProgram;
 	
 	
+	#if (js && html5)
 	static var __lastLoseContextExtension:Dynamic;
 	
 	@:expose("loseGLContext")
@@ -674,6 +675,7 @@ class GL {
 		__lastLoseContextExtension.restoreContext();
 		__lastLoseContextExtension = null;
 	}
+	#end
 	
 	
 	#if commonjs
