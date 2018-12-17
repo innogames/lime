@@ -661,6 +661,21 @@ class GL {
 	private static var __currentProgram:GLProgram;
 	
 	
+	static var __lastLoseContextExtension:Dynamic;
+	
+	@:expose("loseGLContext")
+	static function loseContext() {
+		__lastLoseContextExtension = context.getExtension('WEBGL_lose_context');
+		__lastLoseContextExtension.loseContext();
+	}
+	
+	@:expose("restoreGLContext")
+	static function restoreContext() {
+		__lastLoseContextExtension.restoreContext();
+		__lastLoseContextExtension = null;
+	}
+	
+	
 	#if commonjs
 	private static function __init__ () {
 		
