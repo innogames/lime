@@ -661,19 +661,28 @@ class GL {
 	private static var __currentProgram:GLProgram;
 	
 	
-	#if (js && html5)
+	#if ((js && html5) && debug)
 	static var __lastLoseContextExtension:Dynamic;
 	
 	@:expose("loseGLContext")
 	static function loseContext() {
-		__lastLoseContextExtension = context.getExtension('WEBGL_lose_context');
-		__lastLoseContextExtension.loseContext();
+		var extension = context.getExtension('WEBGL_lose_context');
+		if (extension == null) {
+			js.Browser.console.warn("Context already lost");
+		} else {
+			extension.loseContext();
+			__lastLoseContextExtension = extension;
+		}
 	}
 	
 	@:expose("restoreGLContext")
 	static function restoreContext() {
-		__lastLoseContextExtension.restoreContext();
-		__lastLoseContextExtension = null;
+		if (__lastLoseContextExtension == null) {
+			js.Browser.console.warn("No lost context found"); // yeah
+		} else {
+			__lastLoseContextExtension.restoreContext();
+			__lastLoseContextExtension = null;
+		}
 	}
 	#end
 	
