@@ -202,7 +202,7 @@ class FlashWindow {
 			
 			if (parent.enableTextEvents) {
 				
-				parent.onTextInput.dispatch (String.fromCharCode (event.charCode));
+				parent.onTextInput.dispatch (String.fromCharCode (event.charCode), false);
 				
 			}
 			

@@ -397,8 +397,9 @@ class Module implements IModule {
 	 * Called when a text input event is fired
 	 * @param	window	The window dispatching the event
 	 * @param	text	The current input text
+	 * @param	replacement	Indicates if the input text was a replacement or not (html5 only)
 	 */
-	public function onTextInput (window:Window, text:String):Void { }
+	public function onTextInput (window:Window, text:String, replacement:Bool):Void { }
 	
 	
 	/**

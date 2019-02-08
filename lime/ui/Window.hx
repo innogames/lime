@@ -60,7 +60,7 @@ class Window {
 	public var onResize = new Event<Int->Int->Void> ();
 	public var onRestore = new Event<Void->Void> ();
 	public var onTextEdit = new Event<String->Int->Int->Void> ();
-	public var onTextInput = new Event<String->Void> ();
+	public var onTextInput = new Event<String->Bool->Void> ();
 	public var renderer:Renderer;
 	public var resizable (get, set):Bool;
 	public var scale (get, null):Float;

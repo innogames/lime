@@ -527,7 +527,7 @@ class NativeApplication {
 				
 				case TEXT_INPUT:
 					
-					window.onTextInput.dispatch (textEventInfo.text);
+					window.onTextInput.dispatch (textEventInfo.text, false);
 				
 				case TEXT_EDIT:
 					

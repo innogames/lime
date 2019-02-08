@@ -8,6 +8,7 @@ import js.html.Element;
 import js.html.FocusEvent;
 import js.html.InputElement;
 import js.html.InputEvent;
+import js.html.KeyboardEvent;
 import js.html.LinkElement;
 import js.html.MouseEvent;
 import js.html.TouchEvent;
@@ -35,6 +36,8 @@ import lime.ui.Window;
 class HTML5Window {
 	
 	
+	// In order to ensure the browser will fire clipboard events, we always need to have something selected.
+	// Therefore we use a dummyCharacter instead of "".
 	private static var dummyCharacter = String.fromCharCode (127);
 	private static var textInput:InputElement;
 	private static var windowID:Int = 0;
@@ -52,13 +55,16 @@ class HTML5Window {
 	private var cacheMouseY:Float;
 	private var currentTouches = new Map<Int, Touch> ();
 	private var enableTextEvents:Bool;
+	private var longTouchComposition:Bool;
 	private var isFullscreen:Bool;
+	private var lastLength:Int;
 	private var parent:Window;
 	private var primaryTouch:Touch;
 	private var renderType:String;
 	private var requestedFullscreen:Bool;
 	private var resizeElement:Bool;
 	private var scale = 1.0;
+	private var selectionIndex:Int;
 	private var setHeight:Int;
 	private var setWidth:Int;
 	private var unusedTouchesPool = new List<Touch> ();
@@ -372,21 +378,48 @@ class HTML5Window {
 	
 	private function handleInputEvent (event:InputEvent):Void {
 		
-		// In order to ensure that the browser will fire clipboard events, we always need to have something selected.
-		// Therefore, `value` cannot be "".
+		var length = textInput.value.length;
+		var start = selectionIndex;
 		
-		if (textInput.value != dummyCharacter) {
+		// selection moved backwards (delete) or stayed (composition)?
+		if (start >= textInput.selectionEnd) {
 			
-			var value = StringTools.replace (textInput.value, dummyCharacter, "");
-			
-			if (value.length > 0) {
-				
-				parent.onTextInput.dispatch (value);
-				
+			if (length < lastLength) {
+				return;
 			}
 			
-			textInput.value = dummyCharacter;
+			--start;
 			
+		}
+		
+		// extract added value
+		var value = textInput.value.substring(start, textInput.selectionEnd);
+		var replacement = length == lastLength;
+		
+		// send value
+		parent.onTextInput.dispatch(value, replacement);
+		
+		// clear input field
+		if (!replacement && !isComposite(value)) {
+			
+			textInput.value = dummyCharacter; // see dummyCharacter
+			
+		}
+		
+		longTouchComposition = textInput.selectionStart < textInput.selectionEnd;
+		selectionIndex = textInput.selectionStart;
+		lastLength = textInput.value.length;
+		
+	}
+	
+	
+	private function handleKeyDownEvent (event:KeyboardEvent):Void {
+		
+		selectionIndex = textInput.selectionStart;
+		lastLength = textInput.value.length;
+		
+		if (longTouchComposition) {
+			++selectionIndex; // chromium workaround
 		}
 		
 	}
@@ -436,7 +469,7 @@ class HTML5Window {
 					
 					if (event.currentTarget == element) {
 						
-						// Release outside browser window
+						// register for release outside
 						Browser.window.addEventListener ("mouseup", handleMouseEvent);
 						
 					}
@@ -479,6 +512,7 @@ class HTML5Window {
 				
 				case "mouseup":
 					
+					// stop release outside
 					Browser.window.removeEventListener ("mouseup", handleMouseEvent);
 					
 					if (event.currentTarget == element) {
@@ -541,7 +575,7 @@ class HTML5Window {
 			
 			if (enableTextEvents) {
 				
-				parent.onTextInput.dispatch (text);
+				parent.onTextInput.dispatch (text, false);
 				
 			}
 			
@@ -727,6 +761,15 @@ class HTML5Window {
 	}
 	
 	
+	private function isComposite(value:String) {
+		switch (value) {
+		case "´", "`", "¨", "^", "~", "a", "A", "e", "E", "i", "I", "o", "O", "u", "U", "y", "Y", "c", "C", "n", "N":
+			return true;
+		}
+		return false;
+	}
+	
+	
 	public function move (x:Int, y:Int):Void {
 		
 		
@@ -782,7 +825,7 @@ class HTML5Window {
 				textInput.style.position = 'absolute';
 				textInput.style.opacity = "0";
 				textInput.style.color = "transparent";
-				textInput.value = dummyCharacter; // See: handleInputEvent()
+				textInput.value = dummyCharacter; // see dummyCharacter
 				
 				untyped textInput.autocapitalize = "off";
 				untyped textInput.autocorrect = "off";
@@ -809,13 +852,17 @@ class HTML5Window {
 				untyped (textInput.style).pointerEvents = 'none';
 				textInput.style.zIndex = "-10000000";
 				
-				
 				element.appendChild (textInput);
 				
 			}
 			
+			longTouchComposition = false;
+			selectionIndex = 0;
+			lastLength = 1; // see dummyCharacter
+			
 			if (!enableTextEvents) {
 				
+				textInput.addEventListener ('keydown', handleKeyDownEvent, true);
 				textInput.addEventListener ('input', handleInputEvent, true);
 				textInput.addEventListener ('blur', handleFocusEvent, true);
 				textInput.addEventListener ('cut', handleCutOrCopyEvent, true);
@@ -831,6 +878,7 @@ class HTML5Window {
 			
 			if (textInput != null) {
 				
+				textInput.removeEventListener ('keydown', handleKeyDownEvent, true);
 				textInput.removeEventListener ('input', handleInputEvent, true);
 				textInput.removeEventListener ('blur', handleFocusEvent, true);
 				textInput.removeEventListener ('cut', handleCutOrCopyEvent, true);
