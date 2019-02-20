@@ -72,11 +72,19 @@ class RunScript {
 							
 						}
 					
-					case "Mac", "Mac64":
+					case "Mac":
 						
-						if (PlatformHelper.hostPlatform == MAC) {
+						if (PlatformHelper.hostPlatform == MAC && PlatformHelper.hostArchitecture != X64) {
 							
-							ProcessHelper.runCommand (limeDirectory, "neko", args.concat ([ "mac", toolsDirectory ]));
+							ProcessHelper.runCommand (limeDirectory, "neko", args.concat ([ "mac", "-32", toolsDirectory ]));
+							
+						}
+					
+					case "Mac64":
+						
+						if (PlatformHelper.hostPlatform == MAC && PlatformHelper.hostArchitecture == X64) {
+							
+							ProcessHelper.runCommand (limeDirectory, "neko", args.concat ([ "mac", "-64", toolsDirectory ]));
 							
 						}
 					
@@ -180,7 +188,6 @@ class RunScript {
 			}
 			
 			HaxelibHelper.workingDirectory = Sys.getCwd ();
-			var rebuildBinaries = true;
 			
 			for (arg in args) {
 				
@@ -198,30 +205,13 @@ class RunScript {
 						
 					}
 					
-				} else if (StringTools.startsWith (arg, "-")) {
-					
-					switch (arg) {
-						
-						case "-v", "-verbose":
-							
-							LogHelper.verbose = true;
-						
-						case "-nocolor":
-							
-							LogHelper.enableColor = false;
-						
-						case "-nocffi":
-							
-							rebuildBinaries = false;
-						
-						default:
-						
-					}
-					
 				}
 				
 			}
 			
+			LogHelper.verbose = args.indexOf ("-v") > -1 || args.indexOf ("-verbose") > -1;
+			LogHelper.enableColor = args.indexOf ("-nocolor") > -1;
+			var rebuildBinaries = args.indexOf ("-nocffi") == -1;
 			rebuildTools (rebuildBinaries);
 			
 			if (args.indexOf ("-openfl") > -1) {
@@ -238,7 +228,8 @@ class RunScript {
 		
 		if (!FileSystem.exists ("tools/tools.n") || args.indexOf ("-rebuild") > -1) {
 			
-			rebuildTools ();
+			var rebuildBinaries = args.indexOf ("-nocffi") == -1;
+			rebuildTools (rebuildBinaries);
 			
 		}
 		

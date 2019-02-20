@@ -281,7 +281,7 @@ class LinuxPlatform extends PlatformTarget {
 			
 		} else {
 			
-			if (!targetFlags.exists ("32") && PlatformHelper.hostArchitecture == X64) {
+			if (!targetFlags.exists ("32") && (command == "rebuild" || PlatformHelper.hostArchitecture == Architecture.X64)) {
 				
 				commands.push ([ "-Dlinux", "-DHXCPP_M64" ]);
 				
