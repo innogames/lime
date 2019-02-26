@@ -1,7 +1,6 @@
 package lime._backend.html5;
 
 
-import haxe.macro.Compiler;
 import js.html.webgl.RenderingContext;
 import js.html.CanvasElement;
 import js.Browser;
