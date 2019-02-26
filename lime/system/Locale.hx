@@ -5,8 +5,12 @@ package lime.system;
 import flash.system.Capabilities;
 #end
 
+#if lime_cffi
 import lime.system.CFFI;
+#if android
 import lime.system.JNI;
+#end
+#end
 
 
 abstract Locale(String) from String to String {

@@ -1,12 +1,12 @@
 package lime;
 
 
-import haxe.PosInfos;
-import lime.utils.Log;
-
 #if macro
 import haxe.macro.Compiler;
 import haxe.macro.Context;
+#else
+import haxe.PosInfos;
+import lime.utils.Log;
 #end
 
 #if !lime_debug
@@ -16,9 +16,6 @@ import haxe.macro.Context;
 
 
 class Lib {
-	
-	
-	@:noCompletion private static var __sentWarnings = new Map<String, Bool> ();
 	
 	
 	#if macro
@@ -38,8 +35,9 @@ class Lib {
 		}
 		
 	}
-	#end
+	#else
 	
+	@:noCompletion private static var __sentWarnings = new Map<String, Bool> ();
 	
 	public static function notImplemented (api:String, ?posInfo:PosInfos):Void {
 		
@@ -52,6 +50,7 @@ class Lib {
 		}
 		
 	}
+	#end
 	
 	
 }

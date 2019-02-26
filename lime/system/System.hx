@@ -2,7 +2,11 @@ package lime.system;
 
 
 import haxe.Constraints;
+
+#if lime_cffi
 import lime._backend.native.NativeCFFI;
+#end
+
 import lime.app.Application;
 import lime.app.Config;
 import lime.math.Rectangle;
@@ -331,10 +335,10 @@ class System {
 	}
 	
 	
-	
+
 	public static inline function load (library:String, method:String, args:Int = 0, lazy:Bool = false):Dynamic {
 		
-		#if !macro
+		#if (lime_cffi && !macro)
 		return CFFI.load (library, method, args, lazy);
 		#else
 		return null;

@@ -1,6 +1,6 @@
 package lime.system;
 
-
+#if lime_cffi
 import lime._macros.CFFIMacro;
 
 #if (sys && !macro)
@@ -481,4 +481,5 @@ class CFFI {
 		
 	}
 }
+#end
 #end

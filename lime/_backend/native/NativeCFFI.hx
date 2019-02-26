@@ -1,6 +1,6 @@
 package lime._backend.native;
 
-
+#if lime_cffi
 import lime.graphics.opengl.GLBuffer;
 import lime.graphics.opengl.GLFramebuffer;
 import lime.graphics.opengl.GLProgram;
@@ -757,3 +757,4 @@ class NativeCFFI {
 	
 	
 }
+#end
