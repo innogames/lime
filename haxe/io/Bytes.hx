@@ -597,7 +597,7 @@ class Bytes {
 #else
 
 
-#if !nodejs
+#if (!nodejs && !haxe4)
 import js.html.compat.Uint8Array;
 import js.html.compat.DataView;
 #end
