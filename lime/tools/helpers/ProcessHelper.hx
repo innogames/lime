@@ -13,7 +13,7 @@ class ProcessHelper {
 	
 	
 	public static var dryRun:Bool = false;
-	public static var processorCores (get_processorCores, null):Int;
+	public static var processorCores (get, never):Int;
 	
 	private static var _processorCores:Int = 0;
 	
