@@ -404,7 +404,7 @@ class HTML5AudioContext {
 		#if (js && html5)
 		if (buffer.__srcAudio != null) {
 			
-			return buffer.__srcAudio.play ();
+			buffer.__srcAudio.play ();
 			
 		}
 		#end
