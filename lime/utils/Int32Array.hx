@@ -5,7 +5,8 @@ package lime.utils;
     @:forward
     abstract Int32Array(js.html.Int32Array)
         from js.html.Int32Array
-        to js.html.Int32Array {
+        to js.html.Int32Array
+        to ArrayBufferView {
 
         public inline static var BYTES_PER_ELEMENT : Int = 4;
 

@@ -5,7 +5,8 @@ package lime.utils;
     @:forward
     abstract Float64Array(js.html.Float64Array)
         from js.html.Float64Array
-        to js.html.Float64Array {
+        to js.html.Float64Array
+        to ArrayBufferView {
 
         public inline static var BYTES_PER_ELEMENT : Int = 8;
 

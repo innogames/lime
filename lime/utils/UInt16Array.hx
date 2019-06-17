@@ -5,7 +5,8 @@ package lime.utils;
     @:forward
     abstract UInt16Array(js.html.Uint16Array)
         from js.html.Uint16Array
-        to js.html.Uint16Array {
+        to js.html.Uint16Array
+        to ArrayBufferView {
 
         public inline static var BYTES_PER_ELEMENT : Int = 2;
 

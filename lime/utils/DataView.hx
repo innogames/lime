@@ -7,7 +7,8 @@ import lime.utils.ArrayBufferView;
     @:forward
     abstract DataView(js.html.DataView)
         from js.html.DataView
-        to js.html.DataView {
+        to js.html.DataView
+        to ArrayBufferView {
 
         public inline function new( buffer:ArrayBuffer, byteOffset:Null<Int> = null, byteLength:Null<Int> = null ) {
             if(byteOffset != null && byteLength == null) this = new js.html.DataView( buffer, byteOffset );

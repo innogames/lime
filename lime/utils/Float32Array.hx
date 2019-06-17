@@ -6,7 +6,8 @@ package lime.utils;
     @:arrayAccess
     abstract Float32Array(js.html.Float32Array)
         from js.html.Float32Array
-        to js.html.Float32Array {
+        to js.html.Float32Array
+        to ArrayBufferView {
 
         public inline static var BYTES_PER_ELEMENT : Int = 4;
 

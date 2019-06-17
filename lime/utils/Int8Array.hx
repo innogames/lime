@@ -5,7 +5,8 @@ package lime.utils;
     @:forward
     abstract Int8Array(js.html.Int8Array)
         from js.html.Int8Array
-        to js.html.Int8Array {
+        to js.html.Int8Array
+        to ArrayBufferView {
 
         public inline static var BYTES_PER_ELEMENT : Int = 1;
 
