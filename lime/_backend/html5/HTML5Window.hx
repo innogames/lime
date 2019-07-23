@@ -329,6 +329,8 @@ class HTML5Window {
 			isFullscreen = false;
 			parent.__fullscreen = false;
 			
+			parent.onRestore.dispatch ();
+			
 			var changeEvents = [ "fullscreenchange", "mozfullscreenchange", "webkitfullscreenchange", "MSFullscreenChange" ];
 			var errorEvents = [ "fullscreenerror", "mozfullscreenerror", "webkitfullscreenerror", "MSFullscreenError" ];
 			
