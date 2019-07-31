@@ -289,10 +289,34 @@ class HTML5Window {
 	}
 	
 	
-	private function handleCutOrCopyEvent (event:ClipboardEvent):Void {
+	private function handleCopyEvent (event:ClipboardEvent):Void {
 		
-		event.clipboardData.setData ("text/plain", Clipboard.text);
 		event.preventDefault ();
+		
+		if (settingSystemClipboard) {
+			
+			event.clipboardData.setData ("text/plain", Clipboard.text);
+			
+		} else {
+			
+			parent.onTextCopy.dispatch (function(string) {
+				event.clipboardData.setData ("text/plain", string);
+				Clipboard.setText (string, false);
+			});
+			
+		}
+		
+	}
+	
+	
+	private function handleCutEvent (event:ClipboardEvent):Void {
+		
+		event.preventDefault ();
+		
+		parent.onTextCut.dispatch (function(string) {
+			event.clipboardData.setData ("text/plain", string);
+			Clipboard.setText (string, false);
+		});
 		
 	}
 	
@@ -542,11 +566,11 @@ class HTML5Window {
 		if (text == "") return;
 		
 		text = normalizeInputNewlines (text);
-		Clipboard.text = text;
+		Clipboard.setText (text, false);
 		
 		if (enableTextEvents) {
 			
-			parent.onTextInput.dispatch (text);
+			parent.onTextPaste.dispatch (text);
 			
 		}
 		
@@ -758,6 +782,7 @@ class HTML5Window {
 		
 	}
 	
+	private var settingSystemClipboard = false;
 	
 	public function setClipboard (value:String):Void {
 		
@@ -769,11 +794,13 @@ class HTML5Window {
 		textInput.value = value;
 		textInput.select ();
 		
+		settingSystemClipboard = true;
 		if (Browser.document.queryCommandEnabled ("copy")) {
 			
 			Browser.document.execCommand ("copy");
 			
 		}
+		settingSystemClipboard = false;
 		
 		textInput.value = cacheText;
 		
@@ -829,8 +856,8 @@ class HTML5Window {
 				
 				textInput.addEventListener ('input', handleInputEvent, true);
 				textInput.addEventListener ('blur', handleFocusEvent, true);
-				textInput.addEventListener ('cut', handleCutOrCopyEvent, true);
-				textInput.addEventListener ('copy', handleCutOrCopyEvent, true);
+				textInput.addEventListener ('cut', handleCutEvent, true);
+				textInput.addEventListener ('copy', handleCopyEvent, true);
 				textInput.addEventListener ('paste', handlePasteEvent, true);
 				
 			}
@@ -844,8 +871,8 @@ class HTML5Window {
 				
 				textInput.removeEventListener ('input', handleInputEvent, true);
 				textInput.removeEventListener ('blur', handleFocusEvent, true);
-				textInput.removeEventListener ('cut', handleCutOrCopyEvent, true);
-				textInput.removeEventListener ('copy', handleCutOrCopyEvent, true);
+				textInput.removeEventListener ('cut', handleCutEvent, true);
+				textInput.removeEventListener ('copy', handleCopyEvent, true);
 				textInput.removeEventListener ('paste', handlePasteEvent, true);
 				
 				textInput.blur ();
