@@ -536,18 +536,17 @@ class HTML5Window {
 	
 	private function handlePasteEvent (event:ClipboardEvent):Void {
 		
-		if (untyped event.clipboardData.types.indexOf ("text/plain") > -1) {
+		event.preventDefault ();
+		
+		var text = event.clipboardData.getData ("text/plain");
+		if (text == "") return;
+		
+		text = normalizeInputNewlines (text);
+		Clipboard.text = text;
+		
+		if (enableTextEvents) {
 			
-			var text = normalizeInputNewlines (event.clipboardData.getData ("text/plain"));
-			Clipboard.text = text;
-			
-			if (enableTextEvents) {
-				
-				parent.onTextInput.dispatch (text);
-				
-			}
-			
-			event.preventDefault ();
+			parent.onTextInput.dispatch (text);
 			
 		}
 		
