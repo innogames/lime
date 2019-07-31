@@ -379,7 +379,7 @@ class HTML5Window {
 		
 		if (textInput.value != dummyCharacter) {
 			
-			var value = StringTools.replace (textInput.value, dummyCharacter, "");
+			var value = normalizeInputNewlines (StringTools.replace (textInput.value, dummyCharacter, ""));
 			
 			if (value.length > 0) {
 				
@@ -538,7 +538,7 @@ class HTML5Window {
 		
 		if (untyped event.clipboardData.types.indexOf ("text/plain") > -1) {
 			
-			var text = event.clipboardData.getData ("text/plain");
+			var text = normalizeInputNewlines (event.clipboardData.getData ("text/plain"));
 			Clipboard.text = text;
 			
 			if (enableTextEvents) {
@@ -732,6 +732,16 @@ class HTML5Window {
 	public function move (x:Int, y:Int):Void {
 		
 		
+		
+	}
+	
+	
+	inline function normalizeInputNewlines (text:String):String {
+		
+		// some browsers on Windows (e.g. Chrome) copy-paste newlines as \r\n,
+		// but we want to consistently pass \n newlines to the upper level (e.g. OpenFL)
+		// and the \r by itself doesn't make sense nowadays, so we just strip it
+		return StringTools.replace(text, "\r", "");
 		
 	}
 	
