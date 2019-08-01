@@ -17,6 +17,9 @@ import flash.display.Stage;
 typedef Stage = Dynamic;
 #end
 
+typedef CopyDataProvider = String->Void;
+
+
 #if !lime_debug
 @:fileXml('tags="haxe,release"')
 @:noDebug
@@ -61,6 +64,9 @@ class Window {
 	public var onRestore = new Event<Void->Void> ();
 	public var onTextEdit = new Event<String->Int->Int->Void> ();
 	public var onTextInput = new Event<String->Void> ();
+	public var onTextCopy = new Event<CopyDataProvider->Void> ();
+	public var onTextCut = new Event<CopyDataProvider->Void> ();
+	public var onTextPaste = new Event<String->Void> ();
 	public var renderer:Renderer;
 	public var resizable (get, set):Bool;
 	public var scale (get, null):Float;

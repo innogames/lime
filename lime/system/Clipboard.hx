@@ -72,31 +72,42 @@ class Clipboard {
 	}
 	
 	
-	private static function set_text (value:String):String {
+	private static inline function set_text (value:String):String {
+		
+		setText (value, true);
+		
+		return value;
+		
+	}
+	
+	
+	public static function setText (value:String, syncSystemClipboard:Bool) {
 		
 		var cacheText = _text;
 		_text = value;
 		
-		#if (lime_cffi && !macro)
-		NativeCFFI.lime_clipboard_set_text (value);
-		#elseif flash
-		FlashClipboard.generalClipboard.setData (TEXT_FORMAT, value);
-		#elseif (js && html5)
-		var window = Application.current.window;
-		if (window != null) {
+		if (syncSystemClipboard) {
 			
-			window.backend.setClipboard (value);
+			#if (lime_cffi && !macro)
+			NativeCFFI.lime_clipboard_set_text (value);
+			#elseif flash
+			FlashClipboard.generalClipboard.setData (TEXT_FORMAT, value);
+			#elseif (js && html5)
+			var window = Application.current.window;
+			if (window != null) {
+				
+				window.backend.setClipboard (value);
+				
+			}
+			#end
 			
 		}
-		#end
 		
 		if (_text != cacheText) {
 			
 			onUpdate.dispatch ();
 			
 		}
-		
-		return value;
 		
 	}
 	
