@@ -761,10 +761,12 @@ class HTML5Window {
 	
 	inline function normalizeInputNewlines (text:String):String {
 		
-		// some browsers on Windows (e.g. Chrome) copy-paste newlines as \r\n,
-		// but we want to consistently pass \n newlines to the upper level (e.g. OpenFL)
-		// and the \r by itself doesn't make sense nowadays, so we just strip it
-		return StringTools.replace(text, "\r", "");
+		// normalize line breaks to `\n`, no matter if they were `\r\n` or just `\r`
+		// so the API users (e.g. OpenFL) can assume that input newlines are always `\n`
+		// this avoids issues with some browsers on Windows (e.g. Chrome) that paste
+		// newlines as \r\n, as well as copying Flash text produced by Flash, which only
+		// contain \r (https://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/text/TextField.html#text)
+		return StringTools.replace(StringTools.replace(text, "\r\n", "\n"), "\r", "\n");
 		
 	}
 	
