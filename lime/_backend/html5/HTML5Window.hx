@@ -7,11 +7,13 @@ import js.html.DivElement;
 import js.html.Element;
 import js.html.FocusEvent;
 import js.html.InputElement;
+import js.html.IFrameElement;
 import js.html.InputEvent;
 import js.html.LinkElement;
 import js.html.MouseEvent;
 import js.html.TouchEvent;
 import js.html.ClipboardEvent;
+import js.html.WheelEvent;
 import js.Browser;
 import lime.app.Application;
 import lime.graphics.utils.ImageCanvasUtil;
@@ -38,6 +40,7 @@ class HTML5Window {
 	private static var dummyCharacter = String.fromCharCode (127);
 	private static var textInput:InputElement;
 	private static var windowID:Int = 0;
+	private static var scrollLineHeight = getScrollLineHeight();
 	
 	public var canvas:CanvasElement;
 	public var div:DivElement;
@@ -544,8 +547,25 @@ class HTML5Window {
 			cacheMouseY = y;
 			
 		} else {
+			var event:WheelEvent = cast event;
 			
-			parent.onMouseWheel.dispatch (untyped event.deltaX, -untyped event.deltaY);
+			var deltaY = switch (event.deltaMode) {
+				
+				case WheelEvent.DOM_DELTA_LINE:
+					
+					Math.round (event.deltaY);
+				
+				case WheelEvent.DOM_DELTA_PIXEL:
+					
+					Math.round (event.deltaY / (scrollLineHeight * scale));
+				
+				case _: // WheelEvent.DOM_DELTA_PAGE and weird unknown ones
+					
+					if (event.deltaY < 0) -1 else if (event.deltaY > 0) 1 else 0;
+				
+			};
+			
+			parent.onMouseWheel.dispatch (-deltaY);
 			
 			if (parent.onMouseWheel.canceled) {
 				
@@ -555,6 +575,23 @@ class HTML5Window {
 			
 		}
 		
+	}
+	
+	
+	// See https://stackoverflow.com/a/37474225
+	static function getScrollLineHeight():Int {
+		var iframe:IFrameElement = cast Browser.document.createElement('iframe');
+		iframe.src = '#';
+		Browser.document.body.appendChild(iframe);
+		var iwin = iframe.contentWindow;
+		var idoc = iwin.document;
+		idoc.open();
+		idoc.write('<!DOCTYPE html><html><head></head><body><span>a</span></body></html>');
+		idoc.close();
+		var span = idoc.body.firstElementChild;
+		var r = span.offsetHeight;
+		Browser.document.body.removeChild(iframe);
+		return r;
 	}
 	
 	

@@ -348,10 +348,9 @@ class Module implements IModule {
 	/**
 	 * Called when a mouse wheel event is fired
 	 * @param	window	The window dispatching the event
-	 * @param	deltaX	The amount of horizontal scrolling (if applicable)
-	 * @param	deltaY	The amount of vertical scrolling (if applicable)
+	 * @param	delta	The amount of lines scrolled
 	 */
-	public function onMouseWheel (window:Window, deltaX:Float, deltaY:Float):Void { }
+	public function onMouseWheel (window:Window, delta:Int):Void { }
 	
 	
 	/**
