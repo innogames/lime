@@ -58,7 +58,7 @@ class Window {
 	public var onMouseMove = new Event<Float->Float->Void> ();
 	public var onMouseMoveRelative = new Event<Float->Float->Void> ();
 	public var onMouseUp = new Event<Float->Float->Int->Void> ();
-	public var onMouseWheel = new Event<Float->Float->Void> ();
+	public var onMouseWheel = new Event<Int->Void> ();
 	public var onMove = new Event<Float->Float->Void> ();
 	public var onResize = new Event<Int->Int->Void> ();
 	public var onRestore = new Event<Void->Void> ();
