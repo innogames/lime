@@ -424,7 +424,7 @@ class NativeApplication {
 				
 				case MOUSE_WHEEL:
 					
-					window.onMouseWheel.dispatch (mouseEventInfo.x, mouseEventInfo.y);
+					window.onMouseWheel.dispatch (Std.int (mouseEventInfo.y));
 				
 				default:
 				
@@ -694,7 +694,7 @@ class NativeApplication {
 	
 	private function updateTimer ():Void {
 		
-		#if lime_cffi
+		#if false //lime_cffi
 		if (Timer.sRunningTimers.length > 0) {
 			
 			var currentTime = System.getTimer ();
