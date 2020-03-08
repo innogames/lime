@@ -36,7 +36,7 @@ class Cairo {
 	public var lineWidth (get, set):Float;
 	public var matrix (get, set):Matrix3;
 	public var miterLimit (get, set):Float;
-	public var operator (get, set):CairoOperator;
+	public var operat0r (get, set):CairoOperator;
 	public var source (get, set):CairoPattern;
 	public var target (get, null):CairoSurface;
 	public var tolerance (get, set):Float;
@@ -790,7 +790,7 @@ class Cairo {
 	}
 	
 	
-	@:noCompletion private function get_operator ():CairoOperator {
+	@:noCompletion private function get_operat0r ():CairoOperator {
 		
 		#if (lime_cffi && lime_cairo && !macro)
 		return NativeCFFI.lime_cairo_get_operator (handle);
@@ -801,7 +801,7 @@ class Cairo {
 	}
 	
 	
-	@:noCompletion private function set_operator (value:CairoOperator):CairoOperator {
+	@:noCompletion private function set_operat0r (value:CairoOperator):CairoOperator {
 		
 		#if (lime_cffi && lime_cairo && !macro)
 		NativeCFFI.lime_cairo_set_operator (handle, value);

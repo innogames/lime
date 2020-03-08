@@ -598,8 +598,8 @@ class Bytes {
 
 
 #if !nodejs
-import js.html.compat.Uint8Array;
-import js.html.compat.DataView;
+import js.html.Uint8Array;
+import js.html.DataView;
 #end
 
 #if !macro

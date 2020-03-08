@@ -399,15 +399,15 @@ class HTML5AudioContext {
 	}
 	
 	
-	public function play (buffer:AudioBuffer):Void {
+	public function play (buffer:AudioBuffer):Dynamic {
 		
-		#if (js && html5)
 		if (buffer.__srcAudio != null) {
 			
 			return buffer.__srcAudio.play ();
 			
+		}else {
+			return null;
 		}
-		#end
 		
 	}
 	
